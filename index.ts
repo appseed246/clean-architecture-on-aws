@@ -14,7 +14,7 @@ const returnMessage = async (event: MessageEvent) => {
     type: "text",
     text: event.message.type === "text" ? event.message.text : "やぁ"
   };
-  return await client.pushMessage(event.source.userId, message);
+  await client.replyMessage(event.replyToken, message);
 };
 
 export const handler: APIGatewayProxyHandler = async event => {
