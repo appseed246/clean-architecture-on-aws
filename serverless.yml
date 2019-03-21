@@ -1,0 +1,25 @@
+service:
+  name: linebot-test
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  region: ap-northeast-1
+  runtime: nodejs8.10
+
+custom:
+  env: ${file(env.yaml)}
+
+functions:
+  index:
+    handler: index.handler
+    environment:
+      LINE_ACCESS_TOKEN: ${self:custom.env.LINE_ACCESS_TOKEN}
+      LINE_SECRET: ${self:custom.env.LINE_SECRET}
+    events:
+      - http:
+          method: post
+          path: webhook
