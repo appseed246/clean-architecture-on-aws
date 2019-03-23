@@ -15,7 +15,7 @@ custom:
 
 functions:
   index:
-    handler: index.handler
+    handler: src/handler.line
     environment:
       LINE_ACCESS_TOKEN: ${self:custom.env.LINE_ACCESS_TOKEN}
       LINE_SECRET: ${self:custom.env.LINE_SECRET}

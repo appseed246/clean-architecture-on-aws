@@ -17,7 +17,7 @@ const returnMessage = async (event: MessageEvent) => {
   await client.replyMessage(event.replyToken, message);
 };
 
-export const handler: APIGatewayProxyHandler = async event => {
+export const line: APIGatewayProxyHandler = async event => {
   console.log({ eventbody: event.body });
   const body = JSON.parse(event.body);
   const events: MessageEvent[] = body.events;
