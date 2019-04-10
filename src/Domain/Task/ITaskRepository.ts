@@ -1,7 +1,8 @@
 import Task from "./Task";
 
 export default interface ITaskRepository {
-  save(task: Task[]): void;
-  findAll(): Task[];
-  delete(taskId: string): void;
+  save(task: Task): Promise<void>;
+  findAll(): Promise<Task[]>;
+  findByTaskId(taskId: string): Promise<Task>;
+  delete(taskId: string): Promise<void>;
 }

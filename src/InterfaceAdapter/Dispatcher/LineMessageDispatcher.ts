@@ -1,6 +1,6 @@
 import { WebhookEvent, MessageEvent, EventMessage } from "@line/bot-sdk";
-import IListTaskUseCase from "../../Application/Task/List/IListTaskUseCase";
-import ListTaskRequest from "../../Application/Task/List/ListTaskRequest";
+import IListTaskUseCase from "../../Application/Task/Add/IAddTaskUseCase";
+import ListTaskRequest from "../../Application/Task/Add/AddTaskRequest";
 import { injectable, inject } from "inversify";
 import "reflect-metadata";
 import { TYPES } from "../../Types";

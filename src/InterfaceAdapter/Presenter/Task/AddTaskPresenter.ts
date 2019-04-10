@@ -1,11 +1,11 @@
-import IListTaskPresenter from "../../../Application/Task/List/IListTaskPresenter";
+import IAddTaskPresenter from "../../../Application/Task/Add/IAddTaskPresenter";
 import Task from "../../../Domain/Task/Task";
 import { injectable } from "inversify";
 import "reflect-metadata";
 import { Client, TextMessage } from "@line/bot-sdk";
 
 @injectable()
-export default class ListTaskPresenter implements IListTaskPresenter {
+export default class AddTaskPresenter implements IAddTaskPresenter {
   private client: Client = new Client({
     channelAccessToken: process.env.LINE_ACCESS_TOKEN!,
     channelSecret: process.env.LINE_SECRET

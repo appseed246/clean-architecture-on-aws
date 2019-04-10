@@ -37,10 +37,23 @@ functions:
 resources:
   Resources:
     # DynamoDB TODOテーブル
-    todoTable:
+    users:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: todoTable
+        TableName: users
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    tasks:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: tasks
         AttributeDefinitions:
           - AttributeName: userId
             AttributeType: S
