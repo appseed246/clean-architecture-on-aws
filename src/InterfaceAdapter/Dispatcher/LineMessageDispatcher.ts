@@ -1,14 +1,15 @@
 import { WebhookEvent, MessageEvent, EventMessage } from "@line/bot-sdk";
-import IListTaskUseCase from "../../Application/Task/Add/IAddTaskUseCase";
-import ListTaskRequest from "../../Application/Task/Add/AddTaskRequest";
+import IListTaskUseCase from "../../Application/Task/List/IListTaskUseCase";
 import { injectable, inject } from "inversify";
 import "reflect-metadata";
 import { TYPES } from "../../Types";
+import IAddTaskUseCase from "../../Application/Task/Add/IAddTaskUseCase";
 
 @injectable()
 export default class LineMessageDispatcher {
   constructor(
-    @inject(TYPES.IListTaskUseCase) private interactor: IListTaskUseCase
+    @inject(TYPES.IListTaskUseCase) private listInteractor: IListTaskUseCase,
+    @inject(TYPES.IAddTaskUseCase) private addInteractor: IAddTaskUseCase
   ) {}
 
   public async dispatch(event: WebhookEvent) {
@@ -25,10 +26,21 @@ export default class LineMessageDispatcher {
     switch (message.type) {
       case "text":
         if (message.text.match(/^(\/list)/)) {
-          const request = new ListTaskRequest(event.replyToken);
-          await this.interactor.handle(request);
+          // if (this.matchWith(message.text, "list")) {
+          await this.listInteractor.handle({
+            token: event.replyToken
+          });
           break;
         }
+        if (message.text.match(/^(\/add)/)) {
+          // if (this.matchWith(message.text, "add")) {
+          await this.addInteractor.handle({
+            token: event.replyToken,
+            content: message.text.split(" ")[1]
+          });
+          break;
+        }
+
       default:
         // 何も行わない
         break;

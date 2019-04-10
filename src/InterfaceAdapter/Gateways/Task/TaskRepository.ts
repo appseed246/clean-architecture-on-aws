@@ -9,8 +9,7 @@ export default class TaskRepository implements ITaskRepository {
   private client: DynamoDBClient = new DynamoDBClient();
 
   private readonly tableName = "tasks";
-
-  constructor(private userId: string) {}
+  private readonly userId = "userId";
 
   public async save(task: Task) {
     console.log(task);
@@ -19,15 +18,18 @@ export default class TaskRepository implements ITaskRepository {
     await this.client.update({
       TableName: this.tableName,
       Key: { userId: this.userId },
+      ExpressionAttributeNames: {
+        "#status": "status"
+      },
       ExpressionAttributeValues: {
         ":taskId": task.id,
         ":content": task.content,
         ":status": task.status,
-        ":createAt": task.createAt || new Date(),
-        ":updateAt": new Date()
+        ":createAt": task.createAt.toDateString() || new Date().toDateString(),
+        ":updateAt": new Date().toDateString()
       },
       UpdateExpression:
-        "SET taskId = :taskId, content = :content, status = :status, createAt = :createAt, updateAt = :updateAt"
+        "SET taskId = :taskId, content = :content, #status = :status, createAt = :createAt, updateAt = :updateAt"
     });
   }
 

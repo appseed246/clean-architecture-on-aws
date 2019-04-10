@@ -14,7 +14,7 @@ export const line: APIGatewayProxyHandler = async event => {
   >(TYPES.LineMessageDispatcher);
 
   // webhook????????
-  const body = JSON.parse(event.body);
+  const body = JSON.parse(event.body!);
   const events: MessageEvent[] = body.events;
 
   // ???????????

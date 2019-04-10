@@ -5,6 +5,7 @@ import { injectable, inject } from "inversify";
 import "reflect-metadata";
 import { TYPES } from "../../../Types";
 import AddTaskRequest from "./AddTaskRequest";
+import Task from "../../../Domain/Task/Task";
 
 @injectable()
 export default class AddTaskUseCase implements IAddTaskUseCase {
@@ -14,7 +15,8 @@ export default class AddTaskUseCase implements IAddTaskUseCase {
   ) {}
 
   public async handle(request: AddTaskRequest) {
-    const tasks = await this.repository.findAll();
-    await this.presenter.output(request.token, tasks);
+    const task = new Task("taskId", request.content, "ongoing");
+    await this.repository.save(task);
+    await this.presenter.output(request.token);
   }
 }
